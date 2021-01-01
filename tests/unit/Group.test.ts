@@ -9,7 +9,7 @@ describe('Group', () => {
     expect(addGroup.getDefaultPoints()).toEqual(2);
     expect(addGroup.getStrategy()).toEqual(Strategy.Add);
     expect(addGroup.getDisplayName()).toEqual('abc');
-    expect(addGroup.getMaxPoints()).toBeUndefined();
+    expect(addGroup.getMaxPoints()).toEqual(0);
     expect(deductGroup.getDefaultPoints()).toEqual(1);
     expect(deductGroup.getStrategy()).toEqual(Strategy.Deduct);
     expect(deductGroup.getDisplayName()).toEqual('my group');
@@ -131,5 +131,98 @@ describe('Group', () => {
     expect(group.getTests()[1].getPoints()).toEqual(0);
     expect(group.getTests()[1].isSuccessful()).toEqual(false);
     expect(group.getTests()[1].requiresManualCheck()).toEqual(false);
+  });
+
+  it('calculates max points for strategy add', () => {
+    const group = new Group('a\\d+', 1, Strategy.Add);
+
+    group.addTest('a1', false, true);
+    group.addTest('a2', false, false);
+    group.addTest('a3', false, false);
+
+    expect(group.getMaxPoints()).toEqual(3);
+  });
+
+  it('calculates max points for strategy add and a maximum value', () => {
+    const group = new Group('a\\d+', 1, Strategy.Add, 'a', 2);
+
+    group.addTest('a1', false, true);
+    group.addTest('a2', false, false);
+    group.addTest('a3', false, false);
+
+    // maximum value should be ignored for strategy add, so it should still be 3
+    expect(group.getMaxPoints()).toEqual(3);
+  });
+
+  it('calculates max points for strategy deduct', () => {
+    const group = new Group('a\\d+', 1, Strategy.Deduct);
+
+    group.addTest('a1', false, true);
+    group.addTest('a2', false, false);
+    group.addTest('a3', false, false);
+
+    expect(group.getMaxPoints()).toEqual(3);
+  });
+
+  it('calculates max points for strategy deduct and a maximum value', () => {
+    const group = new Group('a\\d+', 1, Strategy.Deduct, 'a', 2);
+
+    group.addTest('a1', false, true);
+    group.addTest('a2', false, false);
+    group.addTest('a3', false, false);
+
+    expect(group.getMaxPoints()).toEqual(2);
+  });
+
+  it('calculates points for strategy add', () => {
+    const group = new Group('a\\d+', 2, Strategy.Add);
+
+    group.addTest('a1', false, true);
+    group.addTest('a2', false, true);
+    group.addTest('a3', false, false);
+    group.addTest('a4', false, true);
+    group.addTest('a5', false, false);
+
+    expect(group.getPoints()).toEqual(6);
+    expect(group.getMaxPoints()).toEqual(10);
+  });
+
+  it('calculates points for strategy deduct', () => {
+    const group = new Group('a\\d+', 2, Strategy.Deduct);
+
+    group.addTest('a1', false, true);
+    group.addTest('a2', false, true);
+    group.addTest('a3', false, false);
+    group.addTest('a4', false, true);
+    group.addTest('a5', false, false);
+
+    expect(group.getPoints()).toEqual(6);
+    expect(group.getMaxPoints()).toEqual(10);
+  });
+
+  it('calculates points for strategy deduct and a maximum value', () => {
+    const group = new Group('a\\d+', 2, Strategy.Deduct, 'a', 6);
+
+    group.addTest('a1', false, true);
+    group.addTest('a2', false, true);
+    group.addTest('a3', false, false);
+    group.addTest('a4', false, true);
+    group.addTest('a5', false, false);
+
+    expect(group.getPoints()).toEqual(2);
+    expect(group.getMaxPoints()).toEqual(6);
+  });
+
+  it('can not go below zero for strategy deduct', () => {
+    const group = new Group('a\\d+', 2, Strategy.Deduct, 'a', 4);
+
+    group.addTest('a1', false, true);
+    group.addTest('a2', false, true);
+    group.addTest('a3', false, false);
+    group.addTest('a4', false, false);
+    group.addTest('a5', false, false);
+
+    expect(group.getPoints()).toEqual(0);
+    expect(group.getMaxPoints()).toEqual(4);
   });
 });

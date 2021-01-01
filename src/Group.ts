@@ -85,6 +85,41 @@ export default class Group {
     }
   }
 
+  /**
+   * Calculates the scored points
+   */
+  public getPoints(): number {
+    const points = this.getTests().reduce(
+      (prev, current) => {
+        if (this.strategy === Strategy.Add) {
+          return prev + current.getPoints();
+        }
+
+        if (current.isSuccessful()) {
+          return prev;
+        }
+
+        return prev - current.getMaxPoints();
+      },
+      this.strategy === Strategy.Deduct ? this.getMaxPoints() : 0,
+    );
+
+    return Math.max(points, 0);
+  }
+
+  /**
+   * Calculates the maximum possible points
+   */
+  public getMaxPoints(): number {
+    // respect the optional maxPoints value for the deduct strategy
+    if (this.strategy === Strategy.Deduct && typeof this.maxPoints !== 'undefined') {
+      return this.maxPoints;
+    }
+
+    // add all possible points for the tests in this group
+    return this.getTests().reduce((prev, current) => prev + current.getMaxPoints(), 0);
+  }
+
   public getDefaultPoints(): number {
     return this.defaultPoints;
   }
@@ -95,10 +130,6 @@ export default class Group {
 
   public getDisplayName(): string {
     return this.displayName ?? this.match;
-  }
-
-  public getMaxPoints(): number | undefined {
-    return this.maxPoints;
   }
 
   public getTests(): Test[] {
