@@ -1,6 +1,8 @@
 {
   "name": "skills17-test-result",
-  "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:14",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
   "workspaceFolder": "/workspaces/test-result",
   "remoteUser": "node",
   "extensions": [
