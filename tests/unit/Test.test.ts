@@ -30,4 +30,37 @@ describe('Test', () => {
 
     expect(test.requiresManualCheck()).toEqual(true);
   });
+
+  it('converts to json', () => {
+    const successfulTest = new Test('my-test', 2, true, false);
+    const failedTest = new Test('failed-test', 2, false, true);
+    const extraFailedTest = new Test('extra-failed', 2, true, false);
+
+    extraFailedTest.setManualCheck(true);
+
+    expect(JSON.parse(JSON.stringify(successfulTest))).toStrictEqual({
+      name: 'my-test',
+      points: 2,
+      maxPoints: 2,
+      successful: true,
+      required: false,
+      manualCheck: false,
+    });
+    expect(JSON.parse(JSON.stringify(failedTest))).toStrictEqual({
+      name: 'failed-test',
+      points: 0,
+      maxPoints: 2,
+      successful: false,
+      required: true,
+      manualCheck: false,
+    });
+    expect(JSON.parse(JSON.stringify(extraFailedTest))).toStrictEqual({
+      name: 'extra-failed',
+      points: 2,
+      maxPoints: 2,
+      successful: true,
+      required: false,
+      manualCheck: true,
+    });
+  });
 });

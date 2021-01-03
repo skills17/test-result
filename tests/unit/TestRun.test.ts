@@ -26,4 +26,32 @@ describe('TestRun', () => {
 
     expect(run.recordTest('abxb', false, false)).toEqual(false);
   });
+
+  it('converts to json', () => {
+    const run = new TestRun();
+    run.addGroup(new Group('a.*x', 1, Strategy.Add));
+    run.recordTest('abx', false, true);
+
+    expect(JSON.parse(JSON.stringify(run))).toStrictEqual({
+      testResults: [
+        {
+          group: 'a.*x',
+          points: 1,
+          maxPoints: 1,
+          strategy: 'add',
+          manualCheck: false,
+          tests: [
+            {
+              name: 'abx',
+              points: 1,
+              maxPoints: 1,
+              successful: true,
+              required: false,
+              manualCheck: false,
+            },
+          ],
+        },
+      ],
+    });
+  });
 });

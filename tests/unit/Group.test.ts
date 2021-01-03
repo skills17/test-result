@@ -314,4 +314,75 @@ describe('Group', () => {
     expect(deductMaxPointsGroup.getPoints()).toEqual(1);
     expect(deductMaxPointsGroup.getMaxPoints()).toEqual(2);
   });
+
+  it('converts to json', () => {
+    const addGroup = new Group('a\\d+', 2, Strategy.Add);
+    const deductGroup = new Group('a\\d+', 1, Strategy.Deduct, 'deduct-group', 2);
+
+    addGroup.addTest('a1', false, true);
+    addGroup.addTest('a2', false, false);
+    deductGroup.addTest('a1', false, true);
+    deductGroup.addTest('a2', false, true);
+    deductGroup.addTest('a2', true, false);
+    deductGroup.addTest('a3', false, false);
+
+    expect(JSON.parse(JSON.stringify(addGroup))).toStrictEqual({
+      group: 'a\\d+',
+      points: 2,
+      maxPoints: 4,
+      strategy: 'add',
+      manualCheck: false,
+      tests: [
+        {
+          name: 'a1',
+          points: 2,
+          maxPoints: 2,
+          successful: true,
+          required: false,
+          manualCheck: false,
+        },
+        {
+          name: 'a2',
+          points: 0,
+          maxPoints: 2,
+          successful: false,
+          required: false,
+          manualCheck: false,
+        },
+      ],
+    });
+    expect(JSON.parse(JSON.stringify(deductGroup))).toStrictEqual({
+      group: 'deduct-group',
+      points: 1,
+      maxPoints: 2,
+      strategy: 'deduct',
+      manualCheck: true,
+      tests: [
+        {
+          name: 'a1',
+          points: 1,
+          maxPoints: 1,
+          successful: true,
+          required: false,
+          manualCheck: false,
+        },
+        {
+          name: 'a2',
+          points: 1,
+          maxPoints: 1,
+          successful: true,
+          required: false,
+          manualCheck: true,
+        },
+        {
+          name: 'a3',
+          points: 0,
+          maxPoints: 1,
+          successful: false,
+          required: false,
+          manualCheck: false,
+        },
+      ],
+    });
+  });
 });

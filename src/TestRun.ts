@@ -34,4 +34,10 @@ export default class TestRun {
   public getGroups(): Group[] {
     return this.groups;
   }
+
+  public toJSON(): Record<string, unknown> {
+    return {
+      testResults: this.getGroups(),
+    };
+  }
 }

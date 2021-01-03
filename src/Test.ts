@@ -35,4 +35,15 @@ export default class Test {
   public requiresManualCheck(): boolean {
     return this.manualCheck;
   }
+
+  public toJSON(): Record<string, unknown> {
+    return {
+      name: this.getName(),
+      points: this.getPoints(),
+      maxPoints: this.getMaxPoints(),
+      successful: this.isSuccessful(),
+      required: this.isRequired(),
+      manualCheck: this.requiresManualCheck(),
+    };
+  }
 }

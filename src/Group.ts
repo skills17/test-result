@@ -168,4 +168,19 @@ export default class Group {
   public getTests(): Test[] {
     return Object.values(this.tests);
   }
+
+  public requiresManualCheck(): boolean {
+    return !!this.getTests().find((test) => test.requiresManualCheck());
+  }
+
+  public toJSON(): Record<string, unknown> {
+    return {
+      group: this.getDisplayName(),
+      points: this.getPoints(),
+      maxPoints: this.getMaxPoints(),
+      strategy: this.getStrategy(),
+      manualCheck: this.requiresManualCheck(),
+      tests: this.getTests(),
+    };
+  }
 }
