@@ -8,5 +8,5 @@
     "declaration": true,
     "outDir": "lib"
   },
-  "exclude": ["./lib", "./tests"]
+  "exclude": ["./lib"]
 }

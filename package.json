@@ -10,8 +10,8 @@
     "build": "npm run build:js && npm run build:types",
     "build:js": "babel src --out-dir lib --delete-dir-on-start --extensions \".ts\"",
     "build:js:watch": "npm run build:js -- --watch --verbose",
-    "build:types": "tsc --emitDeclarationOnly",
-    "lint": "tsc --project tsconfig.typecheck.json --noEmit && eslint . --ext .ts --ext .js --max-warnings 0",
+    "build:types": "tsc --emitDeclarationOnly --project tsconfig.types.json",
+    "lint": "tsc --noEmit && eslint . --ext .ts --ext .js --max-warnings 0",
     "lint:fix": "npm run lint -- --fix",
     "test": "jest",
     "test:watch": "npm test -- --watch"

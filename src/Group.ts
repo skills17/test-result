@@ -1,3 +1,4 @@
+import Override from './Override';
 import Strategy from './Strategy';
 import Test from './Test';
 
@@ -7,6 +8,8 @@ export default class Group {
   private extraTests: Record<string, boolean> = {};
 
   private tests: Record<string, Test> = {};
+
+  private overrides: Override[] = [];
 
   constructor(
     private match: string,
@@ -31,7 +34,13 @@ export default class Group {
       );
     }
 
-    this.tests[name] = new Test(name, this.defaultPoints, successful, false);
+    const override = this.getOverrideForTest(name);
+    this.tests[name] = new Test(
+      name,
+      override?.getPoints() || this.defaultPoints,
+      successful,
+      override?.isRequired() || false,
+    );
 
     // if an extra tests exist and that failed while this normal test succeeded,
     // require a manual check
@@ -62,6 +71,15 @@ export default class Group {
   }
 
   /**
+   * Get the override for a specific test if it exists
+   *
+   * @param name Test name
+   */
+  private getOverrideForTest(name: string): Override | undefined {
+    return this.overrides.find((override) => override.matches(name));
+  }
+
+  /**
    * Check if a test matches this group
    *
    * @param match Test name to check
@@ -86,11 +104,26 @@ export default class Group {
   }
 
   /**
+   * Add a new test override
+   *
+   * @param override Test override
+   */
+  public addOverride(override: Override): void {
+    this.overrides.push(override);
+  }
+
+  /**
    * Calculates the scored points
    */
   public getPoints(): number {
+    let requiredTestFailed = false;
+
     const points = this.getTests().reduce(
       (prev, current) => {
+        if (current.isRequired() && !current.isSuccessful()) {
+          requiredTestFailed = true;
+        }
+
         if (this.strategy === Strategy.Add) {
           return prev + current.getPoints();
         }
@@ -104,7 +137,7 @@ export default class Group {
       this.strategy === Strategy.Deduct ? this.getMaxPoints() : 0,
     );
 
-    return Math.max(points, 0);
+    return requiredTestFailed ? 0 : Math.max(points, 0);
   }
 
   /**

@@ -1,4 +1,5 @@
 import Group from '../../src/Group';
+import Override from '../../src/Override';
 import Strategy from '../../src/Strategy';
 
 describe('Group', () => {
@@ -240,5 +241,77 @@ describe('Group', () => {
 
     expect(group.getPoints()).toEqual(0);
     expect(group.getMaxPoints()).toEqual(4);
+  });
+
+  it('overrides points for a single test', () => {
+    const addGroup = new Group('a\\d+', 2, Strategy.Add);
+    const deductGroup = new Group('a\\d+', 2, Strategy.Deduct);
+
+    addGroup.addOverride(new Override('a2', false, 3));
+    addGroup.addTest('a1', false, true);
+    addGroup.addTest('a2', false, true);
+    addGroup.addTest('a3', false, true);
+
+    deductGroup.addOverride(new Override('a2', false, 3));
+    deductGroup.addTest('a1', false, true);
+    deductGroup.addTest('a2', false, true);
+    deductGroup.addTest('a3', false, true);
+
+    expect(addGroup.getPoints()).toEqual(7);
+    expect(addGroup.getMaxPoints()).toEqual(7);
+    expect(deductGroup.getPoints()).toEqual(7);
+    expect(deductGroup.getMaxPoints()).toEqual(7);
+  });
+
+  it('scores 0 points if a required test fails', () => {
+    const addGroup = new Group('a\\d+', 1, Strategy.Add);
+    const deductGroup = new Group('a\\d+', 1, Strategy.Deduct);
+    const deductMaxPointsGroup = new Group('a\\d+', 1, Strategy.Deduct, 'a', 2);
+    const override = new Override('a2', true);
+
+    addGroup.addOverride(override);
+    deductGroup.addOverride(override);
+    deductMaxPointsGroup.addOverride(override);
+
+    addGroup.addTest('a1', false, true);
+    addGroup.addTest('a2', false, false);
+    deductGroup.addTest('a1', false, true);
+    deductGroup.addTest('a2', false, false);
+    deductMaxPointsGroup.addTest('a1', false, true);
+    deductMaxPointsGroup.addTest('a2', false, false);
+    deductMaxPointsGroup.addTest('a3', false, true);
+
+    expect(addGroup.getPoints()).toEqual(0);
+    expect(addGroup.getMaxPoints()).toEqual(2);
+    expect(deductGroup.getPoints()).toEqual(0);
+    expect(deductGroup.getMaxPoints()).toEqual(2);
+    expect(deductMaxPointsGroup.getPoints()).toEqual(0);
+    expect(deductMaxPointsGroup.getMaxPoints()).toEqual(2);
+  });
+
+  it('scores the correct points when a required test succeeds', () => {
+    const addGroup = new Group('a\\d+', 1, Strategy.Add);
+    const deductGroup = new Group('a\\d+', 1, Strategy.Deduct);
+    const deductMaxPointsGroup = new Group('a\\d+', 1, Strategy.Deduct, 'a', 2);
+    const override = new Override('a1', true);
+
+    addGroup.addOverride(override);
+    deductGroup.addOverride(override);
+    deductMaxPointsGroup.addOverride(override);
+
+    addGroup.addTest('a1', false, true);
+    addGroup.addTest('a2', false, false);
+    deductGroup.addTest('a1', false, true);
+    deductGroup.addTest('a2', false, false);
+    deductMaxPointsGroup.addTest('a1', false, true);
+    deductMaxPointsGroup.addTest('a2', false, false);
+    deductMaxPointsGroup.addTest('a3', false, true);
+
+    expect(addGroup.getPoints()).toEqual(1);
+    expect(addGroup.getMaxPoints()).toEqual(2);
+    expect(deductGroup.getPoints()).toEqual(1);
+    expect(deductGroup.getMaxPoints()).toEqual(2);
+    expect(deductMaxPointsGroup.getPoints()).toEqual(1);
+    expect(deductMaxPointsGroup.getMaxPoints()).toEqual(2);
   });
 });
