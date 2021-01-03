@@ -153,6 +153,31 @@ export default class Group {
     return this.getTests().reduce((prev, current) => prev + current.getMaxPoints(), 0);
   }
 
+  /**
+   * Returns the tests that do not have an extra test
+   */
+  public getMissingExtraTests(): Test[] {
+    return Object.keys(this.tests)
+      .filter((testName) => typeof this.extraTests[testName] === 'undefined')
+      .map((testName) => this.tests[testName]);
+  }
+
+  /**
+   * Returns the name of extra tests that do not have a normal test
+   */
+  public getMissingNormalTests(): string[] {
+    return Object.keys(this.extraTests).filter(
+      (testName) => typeof this.tests[testName] === 'undefined',
+    );
+  }
+
+  /**
+   * Returns whether this group has at least one normal or extra test
+   */
+  public hasTests(): boolean {
+    return Object.keys(this.tests).length > 0 || Object.keys(this.extraTests).length > 0;
+  }
+
   public getDefaultPoints(): number {
     return this.defaultPoints;
   }
