@@ -133,6 +133,22 @@ describe('Group', () => {
     expect(group.getTests()[1].requiresManualCheck()).toEqual(false);
   });
 
+  it('cannot add a normal test with the same name twice', () => {
+    const group = new Group('a\\d+', 1, Strategy.Add);
+
+    group.addTest('a1', false, true);
+
+    expect(() => group.addTest('a1', false, true)).toThrow('same name');
+  });
+
+  it('cannot add an extra test with the same name twice', () => {
+    const group = new Group('a\\d+', 1, Strategy.Add);
+
+    group.addTest('a1', true, true);
+
+    expect(() => group.addTest('a1', true, true)).toThrow('same name');
+  });
+
   it('calculates max points for strategy add', () => {
     const group = new Group('a\\d+', 1, Strategy.Add);
 

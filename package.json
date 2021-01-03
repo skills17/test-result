@@ -11,7 +11,7 @@
     "build:js": "babel src --out-dir lib --delete-dir-on-start --extensions \".ts\"",
     "build:js:watch": "npm run build:js -- --watch --verbose",
     "build:types": "tsc --emitDeclarationOnly",
-    "lint": "tsc --noEmit && eslint . --ext .ts --ext .js --max-warnings 0",
+    "lint": "tsc --project tsconfig.typecheck.json --noEmit && eslint . --ext .ts --ext .js --max-warnings 0",
     "lint:fix": "npm run lint -- --fix",
     "test": "jest",
     "test:watch": "npm test -- --watch"
