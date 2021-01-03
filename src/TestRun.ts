@@ -37,7 +37,7 @@ export default class TestRun {
 
   public toJSON(): Record<string, unknown> {
     return {
-      testResults: this.getGroups(),
+      testResults: this.getGroups().filter((group) => group.getTests().length > 0),
     };
   }
 }
