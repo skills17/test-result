@@ -1,6 +1,6 @@
 {
   "name": "@skills17/test-result",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Commonly generates and prints test results.",
   "main": "lib/index.js",
   "files": [
