@@ -3,7 +3,7 @@ import Group from './Group';
 export default class TestRun {
   private groups: Group[] = [];
 
-  private hasExtraTests = false;
+  private extraTestRecorded = false;
 
   private ungroupedTests: string[] = [];
 
@@ -26,7 +26,7 @@ export default class TestRun {
    */
   public recordTest(name: string, extra: boolean, successful: boolean): boolean {
     if (extra) {
-      this.hasExtraTests = true;
+      this.extraTestRecorded = true;
     }
 
     const matchedGroup = !!this.groups.find((group) => {
@@ -69,7 +69,7 @@ export default class TestRun {
           .map((test) => `  - ${group.getDisplayName()} > ${test.getName()}`),
       )
       .filter((tests) => tests.length > 0);
-    if (this.hasExtraTests && missingExtraTests.length > 0) {
+    if (this.extraTestRecorded && missingExtraTests.length > 0) {
       warnings.push(
         `The following tests do NOT have extra tests and so can NOT be checked for possible cheating:\n${missingExtraTests
           .map((tests) => tests.join('\n'))
@@ -105,6 +105,10 @@ export default class TestRun {
 
   public getGroups(): Group[] {
     return this.groups;
+  }
+
+  public hasExtraTest(): boolean {
+    return this.extraTestRecorded;
   }
 
   public toJSON(): Record<string, unknown> {

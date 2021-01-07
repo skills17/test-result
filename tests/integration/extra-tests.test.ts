@@ -34,6 +34,8 @@ describe('extra tests', () => {
     run.recordTest('EFoo', true, true);
     run.recordTest('EBar', true, true);
 
+    expect(run.hasExtraTest()).toEqual(true);
+
     expect(JSON.parse(JSON.stringify(run))).toStrictEqual({
       testResults: [
         {
