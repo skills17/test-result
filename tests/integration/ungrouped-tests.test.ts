@@ -12,6 +12,8 @@ describe('ungrouped tests', () => {
     run.recordTest('BFoo', false, true);
     run.recordTest('BBar', false, true);
 
+    expect(run.getUngroupedTests()).toStrictEqual(['BFoo', 'BBar']);
+
     expect(JSON.parse(JSON.stringify(run))).toStrictEqual({
       testResults: [
         {

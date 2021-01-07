@@ -111,6 +111,10 @@ export default class TestRun {
     return this.extraTestRecorded;
   }
 
+  public getUngroupedTests(): string[] {
+    return this.ungroupedTests;
+  }
+
   public toJSON(): Record<string, unknown> {
     const warnings = this.getWarnings();
 
