@@ -13,26 +13,26 @@ describe('extra tests', () => {
     run.addGroup(new Group('E.+', 1, Strategy.Add));
 
     // normal tests
-    run.recordTest('AFoo', false, true);
-    run.recordTest('BFoo', false, true);
-    run.recordTest('BBar', false, true);
-    run.recordTest('BBaz', false, false);
-    run.recordTest('CFoo', false, true);
-    run.recordTest('CBar', false, true);
-    run.recordTest('DFoo', false, false);
-    run.recordTest('EFoo', false, false);
-    run.recordTest('EBar', false, false);
+    run.recordTest('AFoo', 'Foo', false, true);
+    run.recordTest('BFoo', 'Foo', false, true);
+    run.recordTest('BBar', 'Bar', false, true);
+    run.recordTest('BBaz', 'Baz', false, false);
+    run.recordTest('CFoo', 'Foo', false, true);
+    run.recordTest('CBar', 'Bar', false, true);
+    run.recordTest('DFoo', 'Foo', false, false);
+    run.recordTest('EFoo', 'Foo', false, false);
+    run.recordTest('EBar', 'Bar', false, false);
 
     // extra tests
-    run.recordTest('AFoo', true, true);
-    run.recordTest('BFoo', true, true);
-    run.recordTest('BBar', true, true);
-    run.recordTest('BBaz', true, false);
-    run.recordTest('CFoo', true, true);
-    run.recordTest('CBar', true, true);
-    run.recordTest('DFoo', true, true);
-    run.recordTest('EFoo', true, true);
-    run.recordTest('EBar', true, true);
+    run.recordTest('AFoo', 'Foo', true, true);
+    run.recordTest('BFoo', 'Foo', true, true);
+    run.recordTest('BBar', 'Bar', true, true);
+    run.recordTest('BBaz', 'Baz', true, false);
+    run.recordTest('CFoo', 'Foo', true, true);
+    run.recordTest('CBar', 'Bar', true, true);
+    run.recordTest('DFoo', 'Foo', true, true);
+    run.recordTest('EFoo', 'Foo', true, true);
+    run.recordTest('EBar', 'Bar', true, true);
 
     expect(run.hasExtraTest()).toEqual(true);
 
@@ -46,7 +46,7 @@ describe('extra tests', () => {
           manualCheck: false,
           tests: [
             {
-              name: 'AFoo',
+              name: 'Foo',
               points: 1,
               maxPoints: 1,
               successful: true,
@@ -63,7 +63,7 @@ describe('extra tests', () => {
           manualCheck: false,
           tests: [
             {
-              name: 'BFoo',
+              name: 'Foo',
               points: 1,
               maxPoints: 1,
               successful: true,
@@ -71,7 +71,7 @@ describe('extra tests', () => {
               manualCheck: false,
             },
             {
-              name: 'BBar',
+              name: 'Bar',
               points: 1,
               maxPoints: 1,
               successful: true,
@@ -79,7 +79,7 @@ describe('extra tests', () => {
               manualCheck: false,
             },
             {
-              name: 'BBaz',
+              name: 'Baz',
               points: 0,
               maxPoints: 1,
               successful: false,
@@ -96,7 +96,7 @@ describe('extra tests', () => {
           manualCheck: false,
           tests: [
             {
-              name: 'CFoo',
+              name: 'Foo',
               points: 1,
               maxPoints: 1,
               successful: true,
@@ -104,7 +104,7 @@ describe('extra tests', () => {
               manualCheck: false,
             },
             {
-              name: 'CBar',
+              name: 'Bar',
               points: 1,
               maxPoints: 1,
               successful: true,
@@ -121,7 +121,7 @@ describe('extra tests', () => {
           manualCheck: false,
           tests: [
             {
-              name: 'DFoo',
+              name: 'Foo',
               points: 0,
               maxPoints: 1,
               successful: false,
@@ -138,7 +138,7 @@ describe('extra tests', () => {
           manualCheck: false,
           tests: [
             {
-              name: 'EFoo',
+              name: 'Foo',
               points: 0,
               maxPoints: 1,
               successful: false,
@@ -146,7 +146,7 @@ describe('extra tests', () => {
               manualCheck: false,
             },
             {
-              name: 'EBar',
+              name: 'Bar',
               points: 0,
               maxPoints: 1,
               successful: false,

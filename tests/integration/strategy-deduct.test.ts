@@ -12,41 +12,41 @@ describe('strategy deduct', () => {
     run.addGroup(new Group('C.+', 1, Strategy.Deduct, undefined, 2));
     run.addGroup(new Group('D.+', 0.5, Strategy.Deduct));
     const groupE = new Group('E.+', 0.5, Strategy.Deduct, undefined, 2);
-    groupE.addOverride(new Override('EMorePoints', false, 1));
+    groupE.addOverride(new Override('MorePoints', false, 1));
     run.addGroup(groupE);
     run.addGroup(new Group('F.+', 1, Strategy.Deduct));
 
     // normal tests
 
     // group A: should result in 2/3 as ABar deducts 1 point
-    run.recordTest('AFoo', false, true);
-    run.recordTest('ABar', false, false);
-    run.recordTest('ABaz', false, true);
+    run.recordTest('AFoo', 'Foo', false, true);
+    run.recordTest('ABar', 'Bar', false, false);
+    run.recordTest('ABaz', 'Baz', false, true);
 
     // group B: should result in 1/2 as BBar deducts 1 point and max is set to 2
-    run.recordTest('BFoo', false, true);
-    run.recordTest('BBar', false, false);
-    run.recordTest('BBaz', false, true);
+    run.recordTest('BFoo', 'Foo', false, true);
+    run.recordTest('BBar', 'Bar', false, false);
+    run.recordTest('BBaz', 'Baz', false, true);
 
     // group C: should result in 0/2 as a value below 0 is not possible
-    run.recordTest('CFoo', false, false);
-    run.recordTest('CBar', false, false);
-    run.recordTest('CBaz', false, false);
+    run.recordTest('CFoo', 'Foo', false, false);
+    run.recordTest('CBar', 'Bar', false, false);
+    run.recordTest('CBaz', 'Baz', false, false);
 
     // group D: should result in 1/1.5 as default points is 0.5
-    run.recordTest('DFoo', false, true);
-    run.recordTest('DBar', false, false);
-    run.recordTest('DBaz', false, true);
+    run.recordTest('DFoo', 'Foo', false, true);
+    run.recordTest('DBar', 'Bar', false, false);
+    run.recordTest('DBaz', 'Baz', false, true);
 
     // group E: should result in 0.5/2 as one test deducts more points
-    run.recordTest('EFoo', false, true);
-    run.recordTest('EMorePoints', false, false);
-    run.recordTest('EBar', false, false);
-    run.recordTest('EBaz', false, true);
+    run.recordTest('EFoo', 'Foo', false, true);
+    run.recordTest('EMorePoints', 'MorePoints', false, false);
+    run.recordTest('EBar', 'Bar', false, false);
+    run.recordTest('EBaz', 'Baz', false, true);
 
     // group F: should result in 2/2
-    run.recordTest('FFoo', false, true);
-    run.recordTest('FBar', false, true);
+    run.recordTest('FFoo', 'Foo', false, true);
+    run.recordTest('FBar', 'Bar', false, true);
 
     expect(JSON.parse(JSON.stringify(run))).toStrictEqual({
       testResults: [
@@ -58,7 +58,7 @@ describe('strategy deduct', () => {
           manualCheck: false,
           tests: [
             {
-              name: 'AFoo',
+              name: 'Foo',
               points: 1,
               maxPoints: 1,
               successful: true,
@@ -66,7 +66,7 @@ describe('strategy deduct', () => {
               manualCheck: false,
             },
             {
-              name: 'ABar',
+              name: 'Bar',
               points: 0,
               maxPoints: 1,
               successful: false,
@@ -74,7 +74,7 @@ describe('strategy deduct', () => {
               manualCheck: false,
             },
             {
-              name: 'ABaz',
+              name: 'Baz',
               points: 1,
               maxPoints: 1,
               successful: true,
@@ -91,7 +91,7 @@ describe('strategy deduct', () => {
           manualCheck: false,
           tests: [
             {
-              name: 'BFoo',
+              name: 'Foo',
               points: 1,
               maxPoints: 1,
               successful: true,
@@ -99,7 +99,7 @@ describe('strategy deduct', () => {
               manualCheck: false,
             },
             {
-              name: 'BBar',
+              name: 'Bar',
               points: 0,
               maxPoints: 1,
               successful: false,
@@ -107,7 +107,7 @@ describe('strategy deduct', () => {
               manualCheck: false,
             },
             {
-              name: 'BBaz',
+              name: 'Baz',
               points: 1,
               maxPoints: 1,
               successful: true,
@@ -124,7 +124,7 @@ describe('strategy deduct', () => {
           manualCheck: false,
           tests: [
             {
-              name: 'CFoo',
+              name: 'Foo',
               points: 0,
               maxPoints: 1,
               successful: false,
@@ -132,7 +132,7 @@ describe('strategy deduct', () => {
               manualCheck: false,
             },
             {
-              name: 'CBar',
+              name: 'Bar',
               points: 0,
               maxPoints: 1,
               successful: false,
@@ -140,7 +140,7 @@ describe('strategy deduct', () => {
               manualCheck: false,
             },
             {
-              name: 'CBaz',
+              name: 'Baz',
               points: 0,
               maxPoints: 1,
               successful: false,
@@ -157,7 +157,7 @@ describe('strategy deduct', () => {
           manualCheck: false,
           tests: [
             {
-              name: 'DFoo',
+              name: 'Foo',
               points: 0.5,
               maxPoints: 0.5,
               successful: true,
@@ -165,7 +165,7 @@ describe('strategy deduct', () => {
               manualCheck: false,
             },
             {
-              name: 'DBar',
+              name: 'Bar',
               points: 0,
               maxPoints: 0.5,
               successful: false,
@@ -173,7 +173,7 @@ describe('strategy deduct', () => {
               manualCheck: false,
             },
             {
-              name: 'DBaz',
+              name: 'Baz',
               points: 0.5,
               maxPoints: 0.5,
               successful: true,
@@ -190,7 +190,7 @@ describe('strategy deduct', () => {
           manualCheck: false,
           tests: [
             {
-              name: 'EFoo',
+              name: 'Foo',
               points: 0.5,
               maxPoints: 0.5,
               successful: true,
@@ -198,7 +198,7 @@ describe('strategy deduct', () => {
               manualCheck: false,
             },
             {
-              name: 'EMorePoints',
+              name: 'MorePoints',
               points: 0,
               maxPoints: 1,
               successful: false,
@@ -206,7 +206,7 @@ describe('strategy deduct', () => {
               manualCheck: false,
             },
             {
-              name: 'EBar',
+              name: 'Bar',
               points: 0,
               maxPoints: 0.5,
               successful: false,
@@ -214,7 +214,7 @@ describe('strategy deduct', () => {
               manualCheck: false,
             },
             {
-              name: 'EBaz',
+              name: 'Baz',
               points: 0.5,
               maxPoints: 0.5,
               successful: true,
@@ -231,7 +231,7 @@ describe('strategy deduct', () => {
           manualCheck: false,
           tests: [
             {
-              name: 'FFoo',
+              name: 'Foo',
               points: 1,
               maxPoints: 1,
               successful: true,
@@ -239,7 +239,7 @@ describe('strategy deduct', () => {
               manualCheck: false,
             },
             {
-              name: 'FBar',
+              name: 'Bar',
               points: 1,
               maxPoints: 1,
               successful: true,

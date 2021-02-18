@@ -19,19 +19,25 @@ export default class TestRun {
   /**
    * Records a new test in the run
    *
-   * @param name Test name
+   * @param fullName Full test name including all groups
+   * @param testName Test name only that is used for display
    * @param extra Whether it is an extra test or not
    * @param successful Whether the test was successful or not
    * @returns False if no matching group was found
    */
-  public recordTest(name: string, extra: boolean, successful: boolean): boolean {
+  public recordTest(
+    fullName: string,
+    testName: string,
+    extra: boolean,
+    successful: boolean,
+  ): boolean {
     if (extra) {
       this.extraTestRecorded = true;
     }
 
     const matchedGroup = !!this.groups.find((group) => {
-      if (group.matches(name)) {
-        group.addTest(name, extra, successful);
+      if (group.matches(fullName)) {
+        group.addTest(testName, extra, successful);
         return true;
       }
 
@@ -39,7 +45,7 @@ export default class TestRun {
     });
 
     if (!matchedGroup) {
-      this.ungroupedTests.push(name);
+      this.ungroupedTests.push(fullName);
     }
 
     return matchedGroup;

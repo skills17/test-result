@@ -13,26 +13,26 @@ describe('extra tests fail', () => {
     run.addGroup(new Group('E.+', 1, Strategy.Add));
 
     // normal tests
-    run.recordTest('AFoo', false, true);
-    run.recordTest('BFoo', false, true);
-    run.recordTest('BBar', false, true);
-    run.recordTest('BBaz', false, false);
-    run.recordTest('CFoo', false, true);
-    run.recordTest('CBar', false, true);
-    run.recordTest('DFoo', false, true); // extra test for this fails and should trigger a warning
-    run.recordTest('EFoo', false, true); // extra test for this fails and should trigger a warning
-    run.recordTest('EBar', false, true);
+    run.recordTest('AFoo', 'Foo', false, true);
+    run.recordTest('BFoo', 'Foo', false, true);
+    run.recordTest('BBar', 'Bar', false, true);
+    run.recordTest('BBaz', 'Baz', false, false);
+    run.recordTest('CFoo', 'Foo', false, true);
+    run.recordTest('CBar', 'Bar', false, true);
+    run.recordTest('DFoo', 'Foo', false, true); // extra test for this fails and should trigger a warning
+    run.recordTest('EFoo', 'Foo', false, true); // extra test for this fails and should trigger a warning
+    run.recordTest('EBar', 'Bar', false, true);
 
     // extra tests
-    run.recordTest('AFoo', true, true);
-    run.recordTest('BFoo', true, true);
-    run.recordTest('BBar', true, true);
-    run.recordTest('BBaz', true, false);
-    run.recordTest('CFoo', true, true);
-    run.recordTest('CBar', true, true);
-    run.recordTest('DFoo', true, false);
-    run.recordTest('EFoo', true, false);
-    run.recordTest('EBar', true, true);
+    run.recordTest('AFoo', 'Foo', true, true);
+    run.recordTest('BFoo', 'Foo', true, true);
+    run.recordTest('BBar', 'Bar', true, true);
+    run.recordTest('BBaz', 'Baz', true, false);
+    run.recordTest('CFoo', 'Foo', true, true);
+    run.recordTest('CBar', 'Bar', true, true);
+    run.recordTest('DFoo', 'Foo', true, false);
+    run.recordTest('EFoo', 'Foo', true, false);
+    run.recordTest('EBar', 'Bar', true, true);
 
     expect(JSON.parse(JSON.stringify(run))).toStrictEqual({
       testResults: [
@@ -44,7 +44,7 @@ describe('extra tests fail', () => {
           manualCheck: false,
           tests: [
             {
-              name: 'AFoo',
+              name: 'Foo',
               points: 1,
               maxPoints: 1,
               successful: true,
@@ -61,7 +61,7 @@ describe('extra tests fail', () => {
           manualCheck: false,
           tests: [
             {
-              name: 'BFoo',
+              name: 'Foo',
               points: 1,
               maxPoints: 1,
               successful: true,
@@ -69,7 +69,7 @@ describe('extra tests fail', () => {
               manualCheck: false,
             },
             {
-              name: 'BBar',
+              name: 'Bar',
               points: 1,
               maxPoints: 1,
               successful: true,
@@ -77,7 +77,7 @@ describe('extra tests fail', () => {
               manualCheck: false,
             },
             {
-              name: 'BBaz',
+              name: 'Baz',
               points: 0,
               maxPoints: 1,
               successful: false,
@@ -94,7 +94,7 @@ describe('extra tests fail', () => {
           manualCheck: false,
           tests: [
             {
-              name: 'CFoo',
+              name: 'Foo',
               points: 1,
               maxPoints: 1,
               successful: true,
@@ -102,7 +102,7 @@ describe('extra tests fail', () => {
               manualCheck: false,
             },
             {
-              name: 'CBar',
+              name: 'Bar',
               points: 1,
               maxPoints: 1,
               successful: true,
@@ -119,7 +119,7 @@ describe('extra tests fail', () => {
           manualCheck: true,
           tests: [
             {
-              name: 'DFoo',
+              name: 'Foo',
               points: 1,
               maxPoints: 1,
               successful: true,
@@ -136,7 +136,7 @@ describe('extra tests fail', () => {
           manualCheck: true,
           tests: [
             {
-              name: 'EFoo',
+              name: 'Foo',
               points: 1,
               maxPoints: 1,
               successful: true,
@@ -144,7 +144,7 @@ describe('extra tests fail', () => {
               manualCheck: true,
             },
             {
-              name: 'EBar',
+              name: 'Bar',
               points: 1,
               maxPoints: 1,
               successful: true,

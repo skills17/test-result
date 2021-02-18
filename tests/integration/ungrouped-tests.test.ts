@@ -8,9 +8,9 @@ describe('ungrouped tests', () => {
 
     run.addGroup(new Group('A.+', 1, Strategy.Add));
 
-    run.recordTest('AFoo', false, true);
-    run.recordTest('BFoo', false, true);
-    run.recordTest('BBar', false, true);
+    run.recordTest('AFoo', 'Foo', false, true);
+    run.recordTest('BFoo', 'Foo', false, true);
+    run.recordTest('BBar', 'Bar', false, true);
 
     expect(run.getUngroupedTests()).toStrictEqual(['BFoo', 'BBar']);
 
@@ -24,7 +24,7 @@ describe('ungrouped tests', () => {
           manualCheck: false,
           tests: [
             {
-              name: 'AFoo',
+              name: 'Foo',
               points: 1,
               maxPoints: 1,
               successful: true,

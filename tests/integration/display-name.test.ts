@@ -10,9 +10,9 @@ describe('display name', () => {
     run.addGroup(new Group('B.+', 1, Strategy.Add, 'BGroup::foo'));
     run.addGroup(new Group('C.+', 1, Strategy.Add, 'Last group'));
 
-    run.recordTest('AFoo', false, true);
-    run.recordTest('BFoo', false, true);
-    run.recordTest('CFoo', false, true);
+    run.recordTest('AFoo', 'Foo', false, true);
+    run.recordTest('BFoo', 'Foo', false, true);
+    run.recordTest('CFoo', 'Foo', false, true);
 
     expect(JSON.parse(JSON.stringify(run))).toStrictEqual({
       testResults: [
@@ -24,7 +24,7 @@ describe('display name', () => {
           manualCheck: false,
           tests: [
             {
-              name: 'AFoo',
+              name: 'Foo',
               points: 1,
               maxPoints: 1,
               successful: true,
@@ -41,7 +41,7 @@ describe('display name', () => {
           manualCheck: false,
           tests: [
             {
-              name: 'BFoo',
+              name: 'Foo',
               points: 1,
               maxPoints: 1,
               successful: true,
@@ -58,7 +58,7 @@ describe('display name', () => {
           manualCheck: false,
           tests: [
             {
-              name: 'CFoo',
+              name: 'Foo',
               points: 1,
               maxPoints: 1,
               successful: true,

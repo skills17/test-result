@@ -10,8 +10,8 @@ describe('empty groups', () => {
     run.addGroup(new Group('B.+', 1, Strategy.Add));
     run.addGroup(new Group('C.+', 1, Strategy.Add));
 
-    run.recordTest('AFoo', false, true);
-    run.recordTest('CFoo', false, true);
+    run.recordTest('AFoo', 'Foo', false, true);
+    run.recordTest('CFoo', 'Foo', false, true);
 
     expect(JSON.parse(JSON.stringify(run))).toStrictEqual({
       testResults: [
@@ -23,7 +23,7 @@ describe('empty groups', () => {
           manualCheck: false,
           tests: [
             {
-              name: 'AFoo',
+              name: 'Foo',
               points: 1,
               maxPoints: 1,
               successful: true,
@@ -40,7 +40,7 @@ describe('empty groups', () => {
           manualCheck: false,
           tests: [
             {
-              name: 'CFoo',
+              name: 'Foo',
               points: 1,
               maxPoints: 1,
               successful: true,

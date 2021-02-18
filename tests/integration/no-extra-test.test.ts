@@ -10,9 +10,9 @@ describe('no extra test', () => {
     run.addGroup(new Group('B.+', 1, Strategy.Add));
     run.addGroup(new Group('C.+', 1, Strategy.Add));
 
-    run.recordTest('AFoo', false, true);
-    run.recordTest('BFoo', false, false);
-    run.recordTest('CFoo', false, true);
+    run.recordTest('AFoo', 'Foo', false, true);
+    run.recordTest('BFoo', 'Foo', false, false);
+    run.recordTest('CFoo', 'Foo', false, true);
 
     expect(run.hasExtraTest()).toEqual(false);
 
@@ -26,7 +26,7 @@ describe('no extra test', () => {
           manualCheck: false,
           tests: [
             {
-              name: 'AFoo',
+              name: 'Foo',
               points: 1,
               maxPoints: 1,
               successful: true,
@@ -43,7 +43,7 @@ describe('no extra test', () => {
           manualCheck: false,
           tests: [
             {
-              name: 'BFoo',
+              name: 'Foo',
               points: 0,
               maxPoints: 1,
               successful: false,
@@ -60,7 +60,7 @@ describe('no extra test', () => {
           manualCheck: false,
           tests: [
             {
-              name: 'CFoo',
+              name: 'Foo',
               points: 1,
               maxPoints: 1,
               successful: true,

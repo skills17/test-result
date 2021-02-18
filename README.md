@@ -52,14 +52,21 @@ Once all groups have been added, you can start recording tests:
 /**
  * recordTest method:
  *
- * @param {string}    name        Test name
+ * @param {string}    fullName    Full test name including all groups
+ * @param {string}    testName    Test name only that is used for display
  * @param {boolean}   extra       Whether it is an extra test or not
  * @param {boolean}   successful  Whether the test was successful or not
  * @returns {boolean}             False if no matching group was found
  */
 
-run.recordTest('CountriesIndexAll', false, true);
+run.recordTest('Countries > IndexAll', 'IndexAll', false, true);
 ```
+
+The difference between `fullName` and `testName` is that `fullName` should include all groups
+(the name of the `describe()` or `context()` calls) as well as the actual test name
+(`it()` or `test()` calls) while the `testName` is only the actual test name (`it()` or `test()`).
+`fullName` will then be used to match against a group and `testName` will be used for displaying
+the result.
 
 After that, points and everything else will get calculated automatically.
 To get an overview of available getters and other functions, take a look at the [class implementations](https://github.com/skills17/test-result/tree/master/src).

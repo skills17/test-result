@@ -15,34 +15,34 @@ describe('TestRun', () => {
 
   it('records a new test', () => {
     const run = new TestRun();
-    run.addGroup(new Group('a.*x', 1, Strategy.Add));
+    run.addGroup(new Group('a.*x .+', 1, Strategy.Add));
 
-    expect(run.recordTest('abx', false, false)).toEqual(true);
+    expect(run.recordTest('abx > test', 'test', false, false)).toEqual(true);
   });
 
   it('does not record a test that does not match a group', () => {
     const run = new TestRun();
-    run.addGroup(new Group('a.*x', 1, Strategy.Add));
+    run.addGroup(new Group('a.*x .+', 1, Strategy.Add));
 
-    expect(run.recordTest('abxb', false, false)).toEqual(false);
+    expect(run.recordTest('abxb > test', 'test', false, false)).toEqual(false);
   });
 
   it('converts to json', () => {
     const run = new TestRun();
-    run.addGroup(new Group('a.*x', 1, Strategy.Add));
-    run.recordTest('abx', false, true);
+    run.addGroup(new Group('a.*x .+', 1, Strategy.Add));
+    run.recordTest('abx > test', 'test', false, true);
 
     expect(JSON.parse(JSON.stringify(run))).toStrictEqual({
       testResults: [
         {
-          group: 'a.*x',
+          group: 'a.*x .+',
           points: 1,
           maxPoints: 1,
           strategy: 'add',
           manualCheck: false,
           tests: [
             {
-              name: 'abx',
+              name: 'test',
               points: 1,
               maxPoints: 1,
               successful: true,
