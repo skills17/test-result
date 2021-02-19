@@ -59,7 +59,7 @@ export default class TestRun {
 
     // search for groups without any recorded test
     const emptyGroups = this.getGroups().filter((group) => !group.hasTests());
-    if (emptyGroups.length > 0) {
+    if (this.extraTestRecorded && emptyGroups.length > 0) {
       warnings.push(
         `The following groups do not have any test:\n${emptyGroups
           .map((group) => `  - ${group.getDisplayName()}`)

@@ -11,7 +11,9 @@ describe('empty groups', () => {
     run.addGroup(new Group('C.+', 1, Strategy.Add));
 
     run.recordTest('AFoo', 'Foo', false, true);
+    run.recordTest('AFoo', 'Foo', true, true);
     run.recordTest('CFoo', 'Foo', false, true);
+    run.recordTest('CFoo', 'Foo', true, true);
 
     expect(JSON.parse(JSON.stringify(run))).toStrictEqual({
       testResults: [
