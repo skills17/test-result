@@ -15,9 +15,10 @@ describe('TestRun', () => {
 
   it('records a new test', () => {
     const run = new TestRun();
-    run.addGroup(new Group('a.*x .+', 1, Strategy.Add));
+    const group = new Group('a.*x .+', 1, Strategy.Add);
+    run.addGroup(group);
 
-    expect(run.recordTest('abx > test', 'test', false, false)).toEqual(true);
+    expect(run.recordTest('abx > test', 'test', false, false)).toEqual(group);
   });
 
   it('does not record a test that does not match a group', () => {

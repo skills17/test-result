@@ -30,12 +30,12 @@ export default class TestRun {
     testName: string,
     extra: boolean,
     successful: boolean,
-  ): boolean {
+  ): Group | false {
     if (extra) {
       this.extraTestRecorded = true;
     }
 
-    const matchedGroup = !!this.groups.find((group) => {
+    const matchedGroup = this.groups.find((group) => {
       if (group.matches(fullName)) {
         group.addTest(testName, extra, successful);
         return true;
@@ -48,7 +48,7 @@ export default class TestRun {
       this.ungroupedTests.push(fullName);
     }
 
-    return matchedGroup;
+    return matchedGroup || false;
   }
 
   /**
