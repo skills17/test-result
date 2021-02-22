@@ -56,7 +56,7 @@ Once all groups have been added, you can start recording tests:
  * @param {string}    testName    Test name only that is used for display
  * @param {boolean}   extra       Whether it is an extra test or not
  * @param {boolean}   successful  Whether the test was successful or not
- * @returns {boolean}             False if no matching group was found
+ * @returns {Group}               Group that matched or false if no matching group was found
  */
 
 run.recordTest('Countries > IndexAll', 'IndexAll', false, true);
