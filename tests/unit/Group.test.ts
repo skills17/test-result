@@ -11,10 +11,12 @@ describe('Group', () => {
     expect(addGroup.getStrategy()).toEqual(Strategy.Add);
     expect(addGroup.getDisplayName()).toEqual('abc');
     expect(addGroup.getMaxPoints()).toEqual(0);
+    expect(addGroup.getPattern()).toEqual('abc');
     expect(deductGroup.getDefaultPoints()).toEqual(1);
     expect(deductGroup.getStrategy()).toEqual(Strategy.Deduct);
     expect(deductGroup.getDisplayName()).toEqual('my group');
     expect(deductGroup.getMaxPoints()).toEqual(3);
+    expect(deductGroup.getPattern()).toEqual('abc');
   });
 
   it('matches correctly', () => {

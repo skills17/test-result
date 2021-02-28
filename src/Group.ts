@@ -194,6 +194,10 @@ export default class Group {
     return Object.values(this.tests);
   }
 
+  public getPattern(): string {
+    return this.match;
+  }
+
   public requiresManualCheck(): boolean {
     return !!this.getTests().find((test) => test.requiresManualCheck());
   }
