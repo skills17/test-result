@@ -80,6 +80,17 @@ export default class Group {
   }
 
   /**
+   * Rounds points up to two decimal places
+   *
+   * @param points Points
+   * @returns
+   */
+  // eslint-disable-next-line class-methods-use-this
+  private roundPoints(points: number): number {
+    return +points.toFixed(2);
+  }
+
+  /**
    * Check if a test matches this group
    *
    * @param match Test name to check
@@ -137,7 +148,7 @@ export default class Group {
       this.strategy === Strategy.Deduct ? this.getMaxPoints() : 0,
     );
 
-    return requiredTestFailed ? 0 : Math.max(points, 0);
+    return requiredTestFailed ? 0 : this.roundPoints(Math.max(points, 0));
   }
 
   /**
@@ -150,7 +161,9 @@ export default class Group {
     }
 
     // add all possible points for the tests in this group
-    return this.getTests().reduce((prev, current) => prev + current.getMaxPoints(), 0);
+    return this.roundPoints(
+      this.getTests().reduce((prev, current) => prev + current.getMaxPoints(), 0),
+    );
   }
 
   /**
