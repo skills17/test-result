@@ -2,8 +2,8 @@ import Group from '../../src/Group';
 import Strategy from '../../src/Strategy';
 import TestRun from '../../src/TestRun';
 
-describe('display name', () => {
-  it('respects the display name setting', () => {
+describe('small points', () => {
+  it('rounds points correctly', () => {
     const run = new TestRun();
 
     run.addGroup(new Group('A.+', 0.1, Strategy.Add));
